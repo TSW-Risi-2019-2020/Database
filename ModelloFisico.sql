@@ -34,3 +34,33 @@ CREATE TABLE IF NOT EXISTS JFLCorporation.Corso (
   PRIMARY KEY (CodiceC)
 )
 ENGINE=InnoDB;
+
+/*Creazione tabella Cliente*/
+CREATE TABLE IF NOT EXISTS JFLCorporation.Cliente (
+  CodiceFiscaleCL CHAR(16) NOT NULL,
+  NomeCL VARCHAR(50) NOT NULL,
+  CognomeCL VARCHAR(50) NOT NULL,
+  Data_nascitaCL DATE NOT NULL,
+  IndirizzoCL VARCHAR(100) NOT NULL,
+  EmailCL VARCHAR(50) NOT NULL,
+  PasswordCL VARCHAR(50) NOT NULL,
+  
+  PRIMARY KEY (CodiceFiscaleCL)
+)
+ENGINE = InnoDB;
+
+/*Creazione tabella Pagamento*/
+CREATE TABLE IF NOT EXISTS JFLCorporation.Pagamento (
+	NumCarta CHAR(16) NOT NULL,
+    DataScadenza  CHAR(5) NOT NULL,
+	Cliente_CodiceFiscaleCL CHAR(16) NOT NULL,
+	CVC CHAR(3) NOT NULL,
+    
+	CHECK(DataScadenza='__/__'),
+	PRIMARY KEY (NumCarta, Cliente_CodiceFiscaleCL),
+    FOREIGN KEY (Cliente_CodiceFiscaleCL)
+    REFERENCES JFLCorporation.Cliente (CodiceFiscaleCL)
+    
+    ON DELETE CASCADE
+)
+ENGINE = InnoDB;
